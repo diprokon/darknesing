@@ -9,4 +9,15 @@ describe('GameService', () => {
     const service: GameService = TestBed.get(GameService);
     expect(service).toBeTruthy();
   });
+
+  it('should generate level', () => {
+    const service: GameService = TestBed.get(GameService);
+    service.newGame();
+    const level1 = service.levelMap;
+    service.newGame();
+    const level2 = service.levelMap;
+
+    expect(level1).not.toEqual(level2);
+    expect([level1, level2].some(l => !!l)).toBeTruthy();
+  });
 });

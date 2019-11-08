@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
 import { GameService } from '../../services/game.service';
 import { Alive } from '../../utils';
 
@@ -8,7 +8,7 @@ import { Alive } from '../../utils';
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LayoutComponent extends Alive implements OnInit {
+export class LayoutComponent extends Alive {
   @HostBinding('style.backgroundColor')
   backgroundColor: string;
 
@@ -22,8 +22,4 @@ export class LayoutComponent extends Alive implements OnInit {
         this.backgroundColor = value;
       });
   }
-
-  ngOnInit() {
-  }
-
 }

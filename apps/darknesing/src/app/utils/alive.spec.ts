@@ -1,15 +1,37 @@
+import { Alive } from './alive';
+import { Subject } from 'rxjs';
 
-
-class Test {}
+class Test extends Alive {
+}
 
 describe('Alive Class', () => {
-  let obj1: Test;
-
+  let service: Test;
   beforeEach(() => {
-    obj1 = new Test();
+    service = new Test();
   });
 
-  it('TODO', () => {
-    expect(false).toBeTruthy();
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+
+  it('should unsubscribe', () => {
+    const subject = new Subject();
+    const helper = {
+      trigger() {
+      }
+    };
+    const triggerSpy = spyOn(helper, 'trigger');
+
+    subject
+      .pipe(
+        service['whileAlive']()
+      )
+      .subscribe(() => helper.trigger());
+
+    subject.next(1);
+    service.ngOnDestroy();
+    subject.next(2);
+
+    expect(triggerSpy.calls.count()).toEqual(1);
   });
 });

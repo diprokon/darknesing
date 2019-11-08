@@ -1,1 +1,10 @@
-<p>game works!</p>
+<div class="container">
+  <div class="row" *ngFor="let y of game.size | fromTo">
+    <div class="cell"
+         *ngFor="let x of game.size | fromTo">
+      <drk-card *ngIf="!!game.levelMap.get({x: x, y: y})"
+                [state]="game.levelMap.get({x: x, y: y})"
+                (click)="mapHelper.toggle(game.levelMap, {x: x, y: y})"></drk-card>
+    </div>
+  </div>
+</div>
