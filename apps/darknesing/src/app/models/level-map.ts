@@ -1,13 +1,16 @@
+import { Vector } from './vector';
+
 export type CellValue = 0 | 1 | -1;
 
 type LevelMapItems = CellValue[][];
 
-export class Vector {
-  constructor(public x: number, public y: number) {}
-}
 
 export class LevelMap {
   private items: LevelMapItems = [];
+
+  get size(): Vector {
+    return {x: this.items[0].length, y: this.items.length};
+  }
 
   constructor(map?: LevelMapItems) {
     if (map) {

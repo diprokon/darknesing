@@ -38,12 +38,12 @@ export class MapHelperService {
           levelMap.set(v, valA);
         }
       });
+      doAround(levelMap, vect, (valA, v) => {
+        if (valA && checkCell(levelMap, v)) {
+          levelMap.set(v, 0);
+        }
+      });
     }
-    doAround(levelMap, vect, (valA, v) => {
-      if (valA && checkCell(levelMap, v)) {
-        levelMap.set(v, 0);
-      }
-    });
   }
 
   checkCell(map: LevelMap, v: Vector): boolean {

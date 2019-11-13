@@ -1,22 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { GameService } from '../../services/game.service';
-import { MapHelperService } from '../../services/map-helper.service';
-import { FromToPipe } from '../../pipes/from-to.pipe';
+import { GameService, MapHelperService } from '../../services';
 
 @Component({
   selector: 'drk-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss'],
-  providers: [FromToPipe]
-
+  styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
 
   constructor(public game: GameService, public mapHelper: MapHelperService) {
-    this.game.newGame();
   }
 
   ngOnInit() {
+    this.game.newGame();
   }
 
 }
