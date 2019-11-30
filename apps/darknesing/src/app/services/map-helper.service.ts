@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CellValue, LevelMap, Vector } from '../models';
 
-function compareCells(valA: CellValue, valB: CellValue): boolean {
-  return (!valA || valA.isEmpty()) ||
-    (!valB || valB.isEmpty()) ||
-    valA.equals(valB);
+function isEmptyCell(value: CellValue): boolean {
+  return !value || value.isEmpty();
 }
 
-
-function doAround(map: LevelMap, { x, y }: Vector, action: (val: CellValue, { x, y }?: Vector, map?: LevelMap) => void) {
-  action(map.get({ x: x - 1, y }), { x: x - 1, y }, map);
-  action(map.get({ x: x + 1, y }), { x: x + 1, y }, map);
-  action(map.get({ x, y: y - 1 }), { x, y: y - 1 }, map);
-  action(map.get({ x, y: y + 1 }), { x, y: y + 1 }, map);
+function compareCells(valA: CellValue, valB: CellValue): boolean {
+  return isEmptyCell(valA) || isEmptyCell(valB) || valA.equals(valB);
 }
 
 @Injectable({
@@ -20,18 +14,28 @@ function doAround(map: LevelMap, { x, y }: Vector, action: (val: CellValue, { x,
 })
 export class MapHelperService {
 
-  constructor() {
+  doAround(map: LevelMap, { x, y }: Vector, action: (val: CellValue, { x, y }?: Vector, map?: LevelMap) => void) {
+    const points = [
+      { x: x + 1, y },
+      { x, y: y + 1 },
+      { x: x - 1, y },
+      { x, y: y - 1 }
+    ];
+    return points
+      .some((pos: Vector) => {
+        return action(map.get(pos), pos, map);
+      });
   }
 
   toggle(levelMap: LevelMap, pos: Vector) {
     const val = levelMap.get(pos);
     if (val) {
-      doAround(levelMap, pos, (valB) => {
+      this.doAround(levelMap, pos, (valB) => {
         if (valB) {
           valB.toggleValue();
         }
       });
-      doAround(levelMap, pos, (valB, v) => {
+      this.doAround(levelMap, pos, (valB, v) => {
         if (valB && !valB.isEmpty() && this.checkCell(levelMap, v)) {
           valB.setEmpty();
         }
@@ -42,7 +46,62 @@ export class MapHelperService {
   checkCell(map: LevelMap, v: Vector): boolean {
     const equals: boolean[] = [],
       value = map.get(v);
-    doAround(map, v, (valA) => equals.push(compareCells(value, valA)));
+    this.doAround(map, v, (valA) => {
+      equals.push(compareCells(value, valA));
+    });
     return !equals.some(val => !val);
   }
+
+  hasAvailableMoves(map: LevelMap): boolean {
+    const lockedPositions = [];
+    for (let y = 0; y < map.size.y; y++) {
+      for (let x = 0; x < map.size.x; x++) {
+        const pos = { x, y };
+        const cellValue = map.get(pos);
+        if (!cellValue.isEmpty() && !lockedPositions.some(v => Vector.isEqual(v, pos))) {
+          const deadEnd1 = this.checkDeadEnd1(map, pos);
+          if (deadEnd1) {
+            lockedPositions.push(...deadEnd1);
+            continue;
+          }
+          const isSomeone = this.doAround(map, pos, (val) => {
+            if (val && !val.isEmpty()) {
+              return true;
+            }
+          });
+          if (isSomeone && !this.checkDeadEnd1(map, pos)) {
+            return true;
+          }
+        }
+      }
+    }
+
+
+    return false;
+  }
+
+  /***
+   * Check if it is this situation
+   * [
+   *  ...
+   *  ..., (1), -1, ...
+   *  ..., 1, -1, ...
+   *  ...
+   * ]
+   */
+  checkDeadEnd1(map: LevelMap, pos: Vector, value11: CellValue = map.get(pos)): Vector[] | false {
+    const values = [];
+    this.doAround(map, pos, (val, p) => {
+      values.push(val);
+    });
+    if (isEmptyCell(values[0]) || isEmptyCell(values[1]) || !isEmptyCell(values[2]) || !isEmptyCell(values[3])) {
+      return false;
+    }
+    const [value12, value21, value22] = [values[0], values[1], map.get({ x: pos.x + 1, y: pos.y + 1 })];
+    if (!isEmptyCell(value22) && !value11.equals(value22) && !value12.equals(value21)) {
+      return [pos, { x: pos.x + 1, y: pos.y }, { x: pos.x + 1, y: pos.y + 1 }, { x: pos.x, y: pos.y + 1 }];
+    }
+    return false;
+  }
 }
+
