@@ -49,3 +49,18 @@ $depth: 10px;
   .top    { transform: rotateX( 90deg) translateZ($side/2) rotateZ(90deg); }
   .bottom { transform: rotateX(-90deg) translateZ($side/2) rotateZ(270deg); }
 }
+
+.score {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  opacity: 0;
+  font-weight: bold;
+}

@@ -2,8 +2,7 @@
   <div class="row" *ngFor="let y of game.levelMap.size.y | fromTo">
     <div class="cell"
          *ngFor="let x of game.levelMap.size.x | fromTo">
-      <drk-card *ngIf="!!game.levelMap.get({x: x, y: y})"
-                [state]="game.levelMap.get({x: x, y: y})"
+      <drk-card [value]="game.levelMap.get({x: x, y: y})"
                 (click)="mapHelper.toggle(game.levelMap, {x: x, y: y})"></drk-card>
     </div>
   </div>

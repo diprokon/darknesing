@@ -1,18 +1,17 @@
 import { Vector } from './vector';
+import { CellValue } from './cell-value';
 
-export type CellValue = 0 | 1 | -1;
-
-type LevelMapItems = CellValue[][];
+type LevelMapItems<T> = T[][];
 
 
-export class LevelMap {
-  private items: LevelMapItems = [];
+export class LevelMap<T = CellValue> {
+  private items: LevelMapItems<T> = [];
 
   get size(): Vector {
     return {x: this.items[0].length, y: this.items.length};
   }
 
-  constructor(map?: LevelMapItems) {
+  constructor(map?: LevelMapItems<T>) {
     if (map) {
       map.forEach((row, y) => {
         row.forEach((v, x) => {
@@ -22,16 +21,16 @@ export class LevelMap {
     }
   }
 
-  get({x, y}: Vector): CellValue {
+  get({x, y}: Vector): T {
     const row = this.items[y];
     if (row && row[x]) {
       return row[x];
     } else {
-      return 0;
+      return null;
     }
   }
 
-  set({x, y}: Vector, v: CellValue) {
+  set({x, y}: Vector, v: T) {
     if (!this.items[y]) {
       this.items[y] = [];
     }

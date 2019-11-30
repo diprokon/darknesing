@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardComponent } from './card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CellValue } from '../../models';
 
 describe('CardComponent', () => {
   let component: CardComponent;
@@ -10,9 +11,9 @@ describe('CardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule],
-      declarations: [ CardComponent ]
+      declarations: [CardComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -26,10 +27,11 @@ describe('CardComponent', () => {
   });
 
   it('should have valid state', () => {
-    expect(component.state).toBe(-1);
+    component.value = new CellValue(-1);
+    expect(component.value.state).toBe(-1);
     expect(component.stateName).toBe('down');
 
-    component.state = 1;
+    component.value.state = 1;
     expect(component.stateName).toBe('up');
   });
 });

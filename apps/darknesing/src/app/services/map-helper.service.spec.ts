@@ -1,7 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
 import { MapHelperService } from './map-helper.service';
-import { LevelMap } from '../models';
+import { CellState, CellValue, LevelMap } from '../models';
+
+function convertToCellValue(map: CellState[][]): CellValue[][] {
+  return map
+    .map(row => row
+      .map(state => new CellValue(state))
+    );
+}
+
+function getLevelMap(map: CellState[][]): LevelMap<CellValue> {
+  return new LevelMap<CellValue>(convertToCellValue(map));
+}
 
 describe('MapHelperService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -13,7 +24,7 @@ describe('MapHelperService', () => {
 
   it('should check, if cell is done', () => {
     const service: MapHelperService = TestBed.get(MapHelperService);
-    const map: LevelMap = new LevelMap([
+    const map: LevelMap<CellValue> = getLevelMap([
       [1, 1, -1],
       [1, 1, 1],
       [1, 1, 0]
@@ -28,7 +39,7 @@ describe('MapHelperService', () => {
   it('should toggle cell and check around', () => {
     jasmine.clock().install();
     const service: MapHelperService = TestBed.get(MapHelperService);
-    const levelMap = new LevelMap([
+    const levelMap = getLevelMap([
       [1, 1, -1],
       [1, 1, 1],
       [-1, 1, 0]
@@ -41,15 +52,15 @@ describe('MapHelperService', () => {
         [0, 1, 0]
      */
 
-    expect(levelMap.get({ x: 0, y: 0 })).toBe(-1);
-    expect(levelMap.get({ x: 0, y: 1 })).toBe(1);
-    expect(levelMap.get({ x: 0, y: 2 })).toBe(0);
-    expect(levelMap.get({ x: 1, y: 0 })).toBe(1);
-    expect(levelMap.get({ x: 1, y: 1 })).toBe(-1);
-    expect(levelMap.get({ x: 1, y: 2 })).toBe(1);
-    expect(levelMap.get({ x: 2, y: 0 })).toBe(-1);
-    expect(levelMap.get({ x: 2, y: 1 })).toBe(1);
-    expect(levelMap.get({ x: 2, y: 2 })).toBe(0);
+    expect(levelMap.get({ x: 0, y: 0 }).state).toBe(-1);
+    expect(levelMap.get({ x: 0, y: 1 }).state).toBe(1);
+    expect(levelMap.get({ x: 0, y: 2 }).state).toBe(0);
+    expect(levelMap.get({ x: 1, y: 0 }).state).toBe(1);
+    expect(levelMap.get({ x: 1, y: 1 }).state).toBe(-1);
+    expect(levelMap.get({ x: 1, y: 2 }).state).toBe(1);
+    expect(levelMap.get({ x: 2, y: 0 }).state).toBe(-1);
+    expect(levelMap.get({ x: 2, y: 1 }).state).toBe(1);
+    expect(levelMap.get({ x: 2, y: 2 }).state).toBe(0);
 
     jasmine.clock().uninstall();
   });

@@ -1,16 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CellValue, LevelMap, Vector } from '../models';
 
-function checkCell(map: LevelMap, v: Vector): boolean {
-  const equals: boolean[] = [],
-    value = map.get(v);
-  doAround(map, v, (val) => equals.push(compareCells(value, val)));
-
-  return !equals.some(val => !val);
-}
-
 function compareCells(valA: CellValue, valB: CellValue): boolean {
-  return !valA || !valB || valA === valB;
+  return (!valA || valA.isEmpty()) ||
+    (!valB || valB.isEmpty()) ||
+    valA.equals(valB);
 }
 
 
@@ -29,18 +23,17 @@ export class MapHelperService {
   constructor() {
   }
 
-  toggle(levelMap: LevelMap, vect: Vector) {
-    const val = levelMap.get(vect);
+  toggle(levelMap: LevelMap, pos: Vector) {
+    const val = levelMap.get(pos);
     if (val) {
-      doAround(levelMap, vect, (valA, v) => {
-        if (valA) {
-          valA = -valA as CellValue;
-          levelMap.set(v, valA);
+      doAround(levelMap, pos, (valB) => {
+        if (valB) {
+          valB.toggleValue();
         }
       });
-      doAround(levelMap, vect, (valA, v) => {
-        if (valA && checkCell(levelMap, v)) {
-          levelMap.set(v, 0);
+      doAround(levelMap, pos, (valB, v) => {
+        if (valB && !valB.isEmpty() && this.checkCell(levelMap, v)) {
+          valB.setEmpty();
         }
       });
     }
@@ -50,7 +43,6 @@ export class MapHelperService {
     const equals: boolean[] = [],
       value = map.get(v);
     doAround(map, v, (valA) => equals.push(compareCells(value, valA)));
-
     return !equals.some(val => !val);
   }
 }
