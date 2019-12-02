@@ -1,11 +1,16 @@
 <drk-levels-table></drk-levels-table>
 <div class="container">
+  <drk-score [score]="game.score"></drk-score>
   <div class="row" *ngFor="let y of (levelMap.size.y | fromTo)">
     <div class="cell"
          *ngFor="let x of (levelMap.size.x | fromTo)">
       <drk-card [value]="levelMap.get({x: x, y: y})"
-                (click)="toggle({x: x, y: y})"></drk-card>
+                (click)="game.toggle({x: x, y: y})"></drk-card>
     </div>
+  </div>
+  <div class="actions">
+    <button (click)="game.newGame()">Restart</button>
+    <button *ngIf="game.isNextLevelAvailable" (click)="game.nextLevel()">Next Level</button>
   </div>
 </div>
 <div></div>

@@ -13,7 +13,6 @@ function compareCells(valA: CellValue, valB: CellValue): boolean {
   providedIn: 'root'
 })
 export class MapHelperService {
-
   doAround(map: LevelMap, { x, y }: Vector, action: (val: CellValue, { x, y }?: Vector, map?: LevelMap) => void) {
     const points = [
       { x: x + 1, y },
@@ -27,9 +26,10 @@ export class MapHelperService {
       });
   }
 
-  toggle(levelMap: LevelMap, pos: Vector) {
+  toggle(levelMap: LevelMap, pos: Vector): Vector[] {
     const val = levelMap.get(pos);
-    if (val) {
+    const result = [];
+    if (!isEmptyCell(val)) {
       this.doAround(levelMap, pos, (valB) => {
         if (valB) {
           valB.toggleValue();
@@ -38,9 +38,11 @@ export class MapHelperService {
       this.doAround(levelMap, pos, (valB, v) => {
         if (valB && !valB.isEmpty() && this.checkCell(levelMap, v)) {
           valB.setEmpty();
+          result.push(v);
         }
       });
     }
+    return result;
   }
 
   checkCell(map: LevelMap, v: Vector): boolean {
@@ -52,13 +54,17 @@ export class MapHelperService {
     return !equals.some(val => !val);
   }
 
+  isEmptyCell(map: LevelMap, v: Vector) {
+    return isEmptyCell(map.get(v));
+  }
+
   hasAvailableMoves(map: LevelMap): boolean {
     const lockedPositions = [];
     for (let y = 0; y < map.size.y; y++) {
       for (let x = 0; x < map.size.x; x++) {
         const pos = { x, y };
         const cellValue = map.get(pos);
-        if (!cellValue.isEmpty() && !lockedPositions.some(v => Vector.isEqual(v, pos))) {
+        if (!isEmptyCell(cellValue) && !lockedPositions.some(v => Vector.isEqual(v, pos))) {
           const deadEnd1 = this.checkDeadEnd1(map, pos);
           if (deadEnd1) {
             lockedPositions.push(...deadEnd1);

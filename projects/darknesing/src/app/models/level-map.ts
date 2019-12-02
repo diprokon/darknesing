@@ -1,7 +1,7 @@
 import { Vector } from './vector';
 import { CellValue } from './cell-value';
 
-type LevelMapItems<T> = T[][];
+export type LevelMapItems<T = CellValue> = T[][];
 
 
 export class LevelMap<T = CellValue> {

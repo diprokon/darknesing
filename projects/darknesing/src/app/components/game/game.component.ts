@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { GameService, MapHelperService } from '../../services';
-import { Vector } from '../../models';
+import { GameService } from '../../services';
 
 @Component({
   selector: 'drk-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss'],
+  styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
 
@@ -13,19 +12,11 @@ export class GameComponent implements OnInit {
     return this.game.levelMap;
   }
 
-  constructor(public game: GameService, public mapHelper: MapHelperService) {
+  constructor(public game: GameService) {
   }
 
   ngOnInit() {
     this.game.newGame();
-  }
-
-  toggle(pos: Vector) {
-    this.mapHelper.toggle(this.levelMap, pos);
-    if (!this.mapHelper.hasAvailableMoves(this.levelMap)) {
-      alert('end');
-      this.game.nextLevel();
-    }
   }
 
 }

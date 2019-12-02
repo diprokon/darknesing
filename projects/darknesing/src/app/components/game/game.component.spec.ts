@@ -4,6 +4,8 @@ import { GameComponent } from './game.component';
 import { FromToPipe } from '../../pipes/from-to.pipe';
 import { CardComponent } from '../card/card.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ScoreComponent } from '../score/score.component';
+import { LevelsTableComponent } from '../levels-table/levels-table.component';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -12,7 +14,7 @@ describe('GameComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [NoopAnimationsModule],
-      declarations: [GameComponent, FromToPipe, CardComponent]
+      declarations: [GameComponent, FromToPipe, CardComponent, ScoreComponent, LevelsTableComponent]
     })
       .compileComponents();
   }));

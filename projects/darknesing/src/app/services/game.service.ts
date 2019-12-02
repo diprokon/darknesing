@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ObservableProp } from '../../decorators';
-import { CellValue, Level, LevelMap, levels } from '../models';
+import { CellValue, Level, LevelMap, levels, Vector } from '../models';
+import { MapHelperService } from './map-helper.service';
 
 
 @Injectable({
@@ -12,23 +13,53 @@ export class GameService {
   backgroundColor: string;
   backgroundColor$: Observable<string>;
 
-  levelNumber = 0;
+  levelIndex: number;
   levelMap: LevelMap;
+  private startScore = 0;
+  score = 0;
+  isInGame = false;
 
+  get isNextLevelAvailable(): boolean {
+    return !this.isInGame && (this.score - this.startScore) >= this.currentLevel.scoreToOpen;
+  }
 
-  constructor() {
+  get currentLevel() {
+    return levels[this.levelIndex];
+  }
+
+  constructor(private mapHelper: MapHelperService) {
   }
 
   newGame() {
-    this.levelNumber = 0;
+    this.levelIndex = -1;
+    this.startScore = 0;
+    this.score = 0;
     this.nextLevel();
   }
 
   nextLevel() {
-    this.levelNumber++;
-    const level = levels[this.levelNumber - 1];
-    this.levelMap = this.generateLevel(level);
-    this.backgroundColor = level.color;
+    this.isInGame = true;
+    this.startScore = this.score;
+    this.levelIndex++;
+    this.levelMap = this.generateLevel(this.currentLevel);
+    this.backgroundColor = this.currentLevel.color;
+  }
+
+  toggle(pos: Vector) {
+    if (!this.isInGame) {
+      return;
+    }
+    if (this.mapHelper.isEmptyCell(this.levelMap, pos)) {
+      return;
+    }
+    const empty = this.mapHelper.toggle(this.levelMap, pos);
+    empty
+      .forEach(v => {
+        this.score += this.levelMap.get(v).score;
+      });
+    if (!this.mapHelper.hasAvailableMoves(this.levelMap)) {
+      this.isInGame = false;
+    }
   }
 
   private generateLevel({ schema }: Level): LevelMap | null {
