@@ -1,42 +1,43 @@
 {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "newProjectRoot": "projects",
   "projects": {
     "darknesing": {
       "projectType": "application",
       "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        },
-        "@angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "apps/darknesing",
-      "sourceRoot": "apps/darknesing/src",
+      "root": "projects/darknesing",
+      "sourceRoot": "projects/darknesing/src",
       "prefix": "drk",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/darknesing",
-            "index": "apps/darknesing/src/index.html",
-            "main": "apps/darknesing/src/main.ts",
-            "polyfills": "apps/darknesing/src/polyfills.ts",
-            "tsConfig": "apps/darknesing/tsconfig.app.json",
+            "outputPath": "dist/darknesing",
+            "index": "projects/darknesing/src/index.html",
+            "main": "projects/darknesing/src/main.ts",
+            "polyfills": "projects/darknesing/src/polyfills.ts",
+            "tsConfig": "projects/darknesing/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "apps/darknesing/src/favicon.ico",
-              "apps/darknesing/src/assets"
+              "projects/darknesing/src/favicon.ico",
+              "projects/darknesing/src/assets"
             ],
-            "styles": ["apps/darknesing/src/styles.scss"],
+            "styles": [
+              "projects/darknesing/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "apps/darknesing/src/environments/environment.ts",
-                  "with": "apps/darknesing/src/environments/environment.prod.ts"
+                  "replace": "projects/darknesing/src/environments/environment.ts",
+                  "with": "projects/darknesing/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -80,44 +81,36 @@
             "browserTarget": "darknesing:build"
           }
         },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/darknesing/src/test.ts",
+            "polyfills": "projects/darknesing/src/polyfills.ts",
+            "tsConfig": "projects/darknesing/tsconfig.spec.json",
+            "karmaConfig": "projects/darknesing/karma.conf.js",
+            "assets": [
+              "projects/darknesing/src/favicon.ico",
+              "projects/darknesing/src/assets"
+            ],
+            "styles": [
+              "projects/darknesing/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "apps/darknesing/tsconfig.app.json",
-              "apps/darknesing/tsconfig.spec.json"
+              "projects/darknesing/tsconfig.app.json",
+              "projects/darknesing/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/darknesing/**"]
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "apps/darknesing/src/test.ts",
-            "tsConfig": "apps/darknesing/tsconfig.spec.json",
-            "karmaConfig": "apps/darknesing/karma.conf.js",
-            "polyfills": "apps/darknesing/src/polyfills.ts",
-            "styles": [],
-            "scripts": [],
-            "assets": []
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "schematics": {
-    "@nrwl/angular:application": {
-      "unitTestRunner": "karma",
-      "e2eTestRunner": "protractor"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "karma"
-    },
-    "@angular:component": {
-      "style": "scss"
     }
   },
   "defaultProject": "darknesing"

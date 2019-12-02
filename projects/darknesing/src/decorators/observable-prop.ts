@@ -1,27 +1,27 @@
 import { BehaviorSubject } from 'rxjs';
 
 export function ObservableProp(defaultValue = null): any {
-  return function(target, key) {
+  return (target, key) => {
     const accessor = `${key}$`;
     const secretAccessor = `_${key}$`;
 
     Object.defineProperty(target, accessor, {
-      get: function() {
+      get() {
         if (!this[secretAccessor]) {
           this[secretAccessor] = new BehaviorSubject(defaultValue);
         }
         return this[secretAccessor];
       },
-      set: function() {
+      set() {
         throw new Error('You cannot set this property in the Component if you use @ObservableProp');
       }
     });
 
     Object.defineProperty(target, key, {
-      get: function() {
+      get() {
         return this[accessor].getValue();
       },
-      set: function(value: any) {
+      set(value: any) {
         this[accessor].next(value);
       }
     });

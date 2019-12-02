@@ -16,8 +16,8 @@ export class FromToPipe implements PipeTransform {
 
   transform(value: number | [number, number]): number[] {
     const result = [];
-    let from = 0,
-      to = value;
+    let from = 0;
+    let to = value;
 
     if (isArray(value)) {
       from = value[0];

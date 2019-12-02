@@ -44,8 +44,8 @@ export class MapHelperService {
   }
 
   checkCell(map: LevelMap, v: Vector): boolean {
-    const equals: boolean[] = [],
-      value = map.get(v);
+    const equals: boolean[] = [];
+    const value = map.get(v);
     this.doAround(map, v, (valA) => {
       equals.push(compareCells(value, valA));
     });
