@@ -1,0 +1,24 @@
+.wrapper {
+  width: 200px;
+  border: 1px solid white;
+  padding: 20px;
+}
+
+.level {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .label {
+    display: none;
+    color: #fff;
+  }
+
+  &.current {
+    margin: 0 -25px;
+    .label {
+      display: inline-block;
+    }
+  }
+}

@@ -6,6 +6,9 @@
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scss"
+        },
+        "@angular:component": {
+          "style": "scss"
         }
       },
       "root": "apps/darknesing",
@@ -112,6 +115,9 @@
     },
     "@nrwl/angular:library": {
       "unitTestRunner": "karma"
+    },
+    "@angular:component": {
+      "style": "scss"
     }
   },
   "defaultProject": "darknesing"

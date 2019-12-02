@@ -1,0 +1,10 @@
+<div class="wrapper">
+  <div class="level"
+       *ngFor="let level of levels; index as i;"
+       [ngClass]="{current: game.levelNumber - 1 === i}"
+       [ngStyle]="{backgroundColor: level.color}">
+    <span class="label">
+      To next level: {{level.scoreToOpen}}
+    </span>
+  </div>
+</div>

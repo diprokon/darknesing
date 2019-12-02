@@ -8,9 +8,10 @@ import { GameComponent } from './components/game/game.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { CardComponent } from './components/card/card.component';
 import { FromToPipe } from './pipes/from-to.pipe';
+import { LevelsTableComponent } from './components/levels-table/levels-table.component';
 
 @NgModule({
-  declarations: [AppComponent, FromToPipe, GameComponent, LayoutComponent, CardComponent],
+  declarations: [AppComponent, FromToPipe, GameComponent, LayoutComponent, CardComponent, LevelsTableComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
