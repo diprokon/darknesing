@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ObservableProp } from '../../decorators';
-import { CellValue, Level, LevelMap, levels, Vector } from '../models';
+import { LevelMap, levels, Vector } from '../models';
 import { MapHelperService } from './map-helper.service';
+import { RandomGeneratorService } from './random-generator.service';
 
 
 @Injectable({
@@ -17,17 +18,18 @@ export class GameService {
   levelMap: LevelMap;
   private startScore = 0;
   score = 0;
+  scoreToNextLevel = 0;
   isInGame = false;
 
   get isNextLevelAvailable(): boolean {
-    return !this.isInGame && (this.score - this.startScore) >= this.currentLevel.scoreToOpen;
+    return !this.isInGame && this.score >= this.scoreToNextLevel;
   }
 
   get currentLevel() {
     return levels[this.levelIndex];
   }
 
-  constructor(private mapHelper: MapHelperService) {
+  constructor(private mapHelper: MapHelperService, private generator: RandomGeneratorService) {
   }
 
   newGame() {
@@ -39,9 +41,10 @@ export class GameService {
 
   nextLevel() {
     this.isInGame = true;
-    this.startScore = this.score;
     this.levelIndex++;
-    this.levelMap = this.generateLevel(this.currentLevel);
+    this.startScore = this.score;
+    this.scoreToNextLevel = this.score + this.currentLevel.scoreToOpen;
+    this.levelMap = this.generator.generateLevel(this.currentLevel);
     this.backgroundColor = this.currentLevel.color;
   }
 
@@ -60,22 +63,5 @@ export class GameService {
     if (!this.mapHelper.hasAvailableMoves(this.levelMap)) {
       this.isInGame = false;
     }
-  }
-
-  private generateLevel({ schema }: Level): LevelMap | null {
-    const levelMap = new LevelMap();
-
-    for (let y = 0; y < schema.length; y++) {
-      for (let x = 0; x < schema[y].length; x++) {
-        let val: CellValue = null;
-        if (schema[y][x]) {
-          const score = Math.floor(Math.random() * 50);
-          const state = Math.floor(Math.random() * 2);
-          val = new CellValue(state === 1 ? 1 : -1, score);
-        }
-        levelMap.set({ x, y }, val);
-      }
-    }
-    return levelMap;
   }
 }

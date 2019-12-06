@@ -1,15 +1,9 @@
-export type LevelSchema = Array<Array<0 | 1>>;
-
-export interface Level {
-  color: string;
-  schema: LevelSchema;
-  scoreToOpen: number;
-}
+import { Level } from '../app/models/level';
 
 export const levels: Level[] = [
   {
     color: '#f7914e',
-    scoreToOpen: 30,
+    scoreToOpen: 20,
     schema: [
       [1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1],
@@ -20,7 +14,7 @@ export const levels: Level[] = [
   },
   {
     color: '#e37b58',
-    scoreToOpen: 30,
+    scoreToOpen: 18,
     schema: [
       [1, 1, 0, 1, 1],
       [1, 1, 1, 1, 1],
@@ -31,7 +25,7 @@ export const levels: Level[] = [
   },
   {
     color: '#c96861',
-    scoreToOpen: 30,
+    scoreToOpen: 17,
     schema: [
       [1, 1, 1, 1, 1],
       [1, 1, 0, 1, 1],
@@ -42,7 +36,7 @@ export const levels: Level[] = [
   },
   {
     color: '#9b596b',
-    scoreToOpen: 30,
+    scoreToOpen: 18,
     schema: [
       [0, 1, 1, 1, 0],
       [1, 1, 1, 1, 1],
