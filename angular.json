@@ -22,7 +22,7 @@
             "main": "projects/darknesing/src/main.ts",
             "polyfills": "projects/darknesing/src/polyfills.ts",
             "tsConfig": "projects/darknesing/tsconfig.app.json",
-            "aot": true,
+            "aot": false,
             "assets": [
               "projects/darknesing/src/favicon.ico",
               "projects/darknesing/src/assets"
