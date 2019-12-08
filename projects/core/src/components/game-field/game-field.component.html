@@ -1,0 +1,9 @@
+<ng-container *ngIf="levelMap">
+  <div class="row" *ngFor="let y of (levelMap.size.y | fromTo)">
+    <div class="cell"
+         *ngFor="let x of (levelMap.size.x | fromTo)">
+      <drk-card [value]="levelMap.get({x: x, y: y})"
+                (click)="this.onCardClick({x: x, y: y})"></drk-card>
+    </div>
+  </div>
+</ng-container>

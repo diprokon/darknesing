@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GameService } from '../../services';
+import { GameService } from '@drk/core';
+import { levels } from '@drk/env';
 
 @Component({
   selector: 'drk-game',
@@ -8,9 +9,7 @@ import { GameService } from '../../services';
 })
 export class GameComponent implements OnInit {
 
-  get levelMap() {
-    return this.game.levelMap;
-  }
+  levels = levels;
 
   constructor(public game: GameService) {
   }

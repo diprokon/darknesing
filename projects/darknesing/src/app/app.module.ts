@@ -6,17 +6,15 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { GameComponent } from './components/game/game.component';
 import { LayoutComponent } from './components/layout/layout.component';
-import { CardComponent } from './components/card/card.component';
-import { FromToPipe } from './pipes/from-to.pipe';
-import { LevelsTableComponent } from './components/levels-table/levels-table.component';
-import { ScoreComponent } from './components/score/score.component';
+import { DRKComponentsModule } from '@drk/core';
 
 @NgModule({
-  declarations: [AppComponent, FromToPipe, GameComponent, LayoutComponent, CardComponent, LevelsTableComponent, ScoreComponent],
+  declarations: [AppComponent, GameComponent, LayoutComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DRKComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

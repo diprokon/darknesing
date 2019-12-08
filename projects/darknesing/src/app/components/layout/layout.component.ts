@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
-import { GameService } from '../../services/game.service';
-import { Alive } from '../../utils';
+import { Alive, GameService } from '@drk/core';
 
 @Component({
   selector: 'drk-layout',
