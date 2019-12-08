@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - npm install -g @angular/cli
+      - npm install
+  build:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - ng lint
+      - ng test core
+      - ng test darknesing
+      - ng build darknesing
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'dist*'
+  discard-paths: yes
