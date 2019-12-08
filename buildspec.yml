@@ -8,8 +8,6 @@ phases:
       - npm install -g @angular/cli
       - npm install
   build:
-    runtime-versions:
-      nodejs: 10
     commands:
       - ng lint
       - ng test core
