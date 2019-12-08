@@ -12,9 +12,8 @@ phases:
       - ng lint
       - ng test core
       - ng test darknesing
-      - ng build darknesing
+      - ng build darknesing --prod
 artifacts:
   files:
     - '**/*'
   base-directory: 'dist*'
-  discard-paths: yes
