@@ -1,10 +1,10 @@
-import { Alive } from './alive';
 import { Subject } from 'rxjs';
+import { UntilDestroyed } from './until-destroyed';
 
-class Test extends Alive {
+class Test extends UntilDestroyed {
 }
 
-describe('Alive Class', () => {
+describe('UntilDestroyed Class', () => {
   let service: Test;
   beforeEach(() => {
     service = new Test();
@@ -24,7 +24,7 @@ describe('Alive Class', () => {
 
     subject
       .pipe(
-        service['whileAlive']()
+        service['untilDestroyed']()
       )
       .subscribe(() => helper.trigger());
 

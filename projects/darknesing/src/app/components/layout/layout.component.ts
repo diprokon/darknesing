@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
-import { Alive, GameService } from '@drk/core';
+import { GameService, UntilDestroyed } from '@drk/core';
 
 @Component({
   selector: 'drk-layout',
@@ -7,7 +7,7 @@ import { Alive, GameService } from '@drk/core';
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LayoutComponent extends Alive {
+export class LayoutComponent extends UntilDestroyed {
   @HostBinding('style.backgroundColor')
   backgroundColor: string;
 
@@ -15,7 +15,7 @@ export class LayoutComponent extends Alive {
     super();
     gameService.backgroundColor$
       .pipe(
-        this.whileAlive()
+        this.untilDestroyed()
       )
       .subscribe(value => {
         this.backgroundColor = value;
