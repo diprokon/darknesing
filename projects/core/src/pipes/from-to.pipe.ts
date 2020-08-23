@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { isArray } from 'util';
 
 /**
  * return array of numbers
@@ -19,7 +18,7 @@ export class FromToPipe implements PipeTransform {
     let from = 0;
     let to = value;
 
-    if (isArray(value)) {
+    if (Array.isArray(value)) {
       from = value[0];
       to = value[1] + 1;
     }

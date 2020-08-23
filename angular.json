@@ -22,7 +22,7 @@
             "main": "projects/darknesing/src/main.ts",
             "polyfills": "projects/darknesing/src/polyfills.ts",
             "tsConfig": "projects/darknesing/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "projects/darknesing/src/favicon.ico",
               "projects/darknesing/src/assets"
@@ -45,7 +45,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -123,6 +122,11 @@
           "options": {
             "tsConfig": "projects/core/tsconfig.lib.json",
             "project": "projects/core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/core/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
