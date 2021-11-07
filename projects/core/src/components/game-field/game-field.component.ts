@@ -15,7 +15,7 @@ export class GameFieldComponent {
   toggle = new EventEmitter<Vector>();
 
   onCardClick(pos: Vector) {
-    if (this.levelMap.get(pos).isEmpty()) {
+    if (this.levelMap.get(pos)?.isEmpty()) {
       return;
     }
     this.toggle.emit(pos);

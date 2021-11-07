@@ -21,6 +21,7 @@ export class GameService {
   score = 0;
   scoreToNextLevel = 0;
   isInGame = false;
+  hasMoves = false;
 
   get isNextLevelAvailable(): boolean {
     return !this.isInGame && this.score >= this.scoreToNextLevel;
@@ -47,6 +48,7 @@ export class GameService {
     this.scoreToNextLevel = levels.slice(0, this.levelIndex + 1).map(l => l.scoreToOpen).reduce((score, l) => score + l, 0);
     this.levelMap = this.generator.generateLevel(this.currentLevel);
     this.backgroundColor = this.currentLevel.color;
+    this.hasMoves = true;
   }
 
   toggle(pos: Vector) {
@@ -63,6 +65,7 @@ export class GameService {
       });
     if (!this.mapHelper.hasAvailableMoves(this.levelMap)) {
       this.isInGame = false;
+      this.hasMoves = false;
     }
   }
 }

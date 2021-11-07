@@ -7,7 +7,11 @@
   <drk-game-field [levelMap]="game.levelMap" (toggle)="game.toggle($event)"></drk-game-field>
   <div class="actions">
     <button (click)="game.newGame()">Restart</button>
-    <button *ngIf="game.isNextLevelAvailable" (click)="game.nextLevel()">Next Level</button>
+    <button *ngIf="game.score >= game.scoreToNextLevel" (click)="game.nextLevel()">Next Level</button>
+    <br>
+    <p *ngIf="!game.hasMoves">
+      There are no available moves. Try again
+    </p>
   </div>
 </div>
 <div></div>

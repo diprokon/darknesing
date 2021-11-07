@@ -23,11 +23,7 @@ export class LevelMap<T = CellValue> {
 
   get({x, y}: Vector): T {
     const row = this.items[y];
-    if (row && row[x]) {
-      return row[x];
-    } else {
-      return null;
-    }
+    return row?.[x] ? row[x] : null;
   }
 
   set({x, y}: Vector, v: T) {
