@@ -11,10 +11,10 @@ export const scoreWeightMap: WeightMap = [
   },
   {
     value: 2,
-    weight: 3
+    weight: 5
   },
   {
     value: 3,
-    weight: 1
+    weight: 3
   }
 ];

@@ -44,7 +44,7 @@ export class GameService {
     this.isInGame = true;
     this.levelIndex++;
     this.startScore = this.score;
-    this.scoreToNextLevel = this.score + this.currentLevel.scoreToOpen;
+    this.scoreToNextLevel = levels.slice(0, this.levelIndex + 1).map(l => l.scoreToOpen).reduce((score, l) => score + l, 0);
     this.levelMap = this.generator.generateLevel(this.currentLevel);
     this.backgroundColor = this.currentLevel.color;
   }
