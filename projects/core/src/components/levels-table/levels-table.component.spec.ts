@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LevelsTableComponent } from './levels-table.component';
 
@@ -6,7 +6,7 @@ describe('LevelsTableComponent', () => {
   let component: LevelsTableComponent;
   let fixture: ComponentFixture<LevelsTableComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ LevelsTableComponent ]
     })
